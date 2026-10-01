@@ -1,0 +1,51 @@
+# Desktop web build and dependencies
+apps/desktop/node_modules/
+apps/desktop/dist/
+*.tsbuildinfo
+
+# Rust / Tauri build outputs
+apps/desktop/src-tauri/target/
+
+# Python environments, test dependencies and caches
+services/ai-service/.venv/
+services/ai-service/.test-deps/
+services/ai-service/.package-deps/
+services/ai-service/.package-venv/
+services/ai-service/__pycache__/
+services/ai-service/.pytest_cache/
+services/ai-service/.mypy_cache/
+services/ai-service/.ruff_cache/
+**/__pycache__/
+*.py[cod]
+
+# Local application data and logs
+data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.log
+
+# Downloaded local models are release assets, not source control assets
+apps/desktop/src-tauri/resources/models/*.gguf
+!apps/desktop/src-tauri/resources/models/README.md
+apps/desktop/src-tauri/target
+# Secrets: commit an explicit .env.example only
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editor and operating-system files
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local agent/tool state
+.agents/
+.codex/
+

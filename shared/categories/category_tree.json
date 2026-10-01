@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "description": "Application-owned category tree. AI may only select from these values; the application maps them to filesystem paths. AI must never emit arbitrary paths.",
+  "categories": [
+    {
+      "name": "Documents",
+      "subcategories": ["Research", "Notes", "Reports", "Legal", "Presentations"]
+    },
+    {
+      "name": "Development",
+      "subcategories": ["Code", "Documentation", "Screenshots", "Configs", "Databases"]
+    },
+    {
+      "name": "Finance",
+      "subcategories": ["Statements", "Invoices", "Receipts", "Taxes", "Budgets"]
+    },
+    {
+      "name": "Images",
+      "subcategories": ["Screenshots", "Photos", "Graphics", "Scans"]
+    },
+    {
+      "name": "Books",
+      "subcategories": ["Ebooks", "Papers", "Manuals"]
+    },
+    {
+      "name": "Work",
+      "subcategories": ["Projects", "Meetings", "Contracts"]
+    },
+    {
+      "name": "Personal",
+      "subcategories": ["Identity", "Health", "Travel", "Education"]
+    },
+    {
+      "name": "Software",
+      "subcategories": ["Installers", "Portable", "Licenses"]
+    },
+    {
+      "name": "Archives",
+      "subcategories": ["Zip", "Compressed", "Backups"]
+    },
+    {
+      "name": "Other",
+      "subcategories": ["Misc", "Unknown"]
+    }
+  ],
+  "fallback": {
+    "category": "Other",
+    "subcategory": "Unknown"
+  }
+}

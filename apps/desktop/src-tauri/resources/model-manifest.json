@@ -1,0 +1,6 @@
+{
+  "model_name": "organizer-chat",
+  "model_file": "models/organizer-chat.gguf",
+  "sha256": "REPLACE_WITH_THE_RELEASED_GGUF_SHA256",
+  "context_size": 4096
+}

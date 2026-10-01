@@ -1,0 +1,11 @@
+{
+  "name": "local-ai-organizer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local AI File Organizer monorepo",
+  "scripts": {
+    "desktop": "npm --prefix apps/desktop run dev",
+    "desktop:build": "npm --prefix apps/desktop run build",
+    "ai": "python3 -m uvicorn app.main:app --host 127.0.0.1 --port 8010 --app-dir services/ai-service"
+  }
+}
