@@ -15,6 +15,9 @@ services/ai-service/__pycache__/
 services/ai-service/.pytest_cache/
 services/ai-service/.mypy_cache/
 services/ai-service/.ruff_cache/
+services/ai-service/.pyinstaller-build/
+services/ai-service/.pyinstaller-spec/
+services/ai-service/pytest-cache-files-*/
 **/__pycache__/
 *.py[cod]
 
@@ -28,6 +31,11 @@ data/
 # Downloaded local models are release assets, not source control assets
 apps/desktop/src-tauri/resources/models/*.gguf
 !apps/desktop/src-tauri/resources/models/README.md
+apps/desktop/src-tauri/resources/ai-service/*.exe
+apps/desktop/src-tauri/resources/llama/*.exe
+apps/desktop/src-tauri/resources/llama/*.dll
+apps/desktop/src-tauri/resources/llama/LICENSE-LLVM-OpenMP
+apps/desktop/src-tauri/resources/llama-win-*.zip
 apps/desktop/src-tauri/target
 # Secrets: commit an explicit .env.example only
 .env

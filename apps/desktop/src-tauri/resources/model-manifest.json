@@ -1,6 +1,6 @@
 {
-  "model_name": "organizer-chat",
+  "model_name": "Qwen2.5-1.5B-Instruct-Q4_K_M",
   "model_file": "models/organizer-chat.gguf",
-  "sha256": "REPLACE_WITH_THE_RELEASED_GGUF_SHA256",
+  "sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e",
   "context_size": 4096
 }

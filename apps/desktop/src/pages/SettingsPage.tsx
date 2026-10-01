@@ -57,7 +57,7 @@ export function SettingsPage() {
                 <button
                   className="btn primary"
                   disabled={backend.kind !== "tauri" || modelStatus?.state === "ready" || modelStatus?.state === "starting"}
-                  onClick={() => void backend.startLocalModel().then((status) => { setModelStatus(status); notify("success", "Local model is ready."); }).catch((error) => notify("error", error instanceof Error ? error.message : "Local model failed to start"))}
+                  onClick={() => void backend.startLocalModel().then((status) => { setModelStatus(status); notify("success", "Local model is ready."); }).catch((error) => notify("error", error instanceof Error ? error.message : typeof error === "string" ? error : "Local model failed to start"))}
                 >
                   Start bundled model
                 </button>

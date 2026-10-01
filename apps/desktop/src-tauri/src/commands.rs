@@ -65,11 +65,11 @@ pub fn start_bundled_stack(state: &AppState) -> Result<LocalModelStatus, AppErro
     let endpoint = status
         .endpoint
         .as_deref()
-        .ok_or_else(|| "local model did not expose an endpoint".to_string())?;
+        .ok_or_else(|| AppError::AiService("local model did not expose an endpoint".into()))?;
     let model_name = status
         .model_name
         .as_deref()
-        .ok_or_else(|| "local model did not report its name".to_string())?;
+        .ok_or_else(|| AppError::AiService("local model did not report its name".into()))?;
     let mut settings = state.db.get_settings().map_err(AppError::from)?;
     settings.ai_service_url = "http://127.0.0.1:8010".into();
     state.db.save_settings(&settings).map_err(AppError::from)?;

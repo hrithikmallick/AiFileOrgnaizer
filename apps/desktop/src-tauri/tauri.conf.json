@@ -1,7 +1,7 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "Local AI File Organizer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "identifier": "ai.local.file-organizer",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -31,6 +31,7 @@
     "icon": [],
     "resources": [
       "resources/model-manifest.json",
+      "resources/ai-service",
       "resources/llama",
       "resources/models"
     ]

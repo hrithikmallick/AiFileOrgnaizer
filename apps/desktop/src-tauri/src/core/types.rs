@@ -281,7 +281,7 @@ impl Default for AppSettings {
             max_file_size_for_hashing: 512 * 1024 * 1024,
             pdf_page_limit: 5,
             ai_service_url: "http://127.0.0.1:8010".into(),
-            llm_model: "qwen2.5-3b-instruct".into(),
+            llm_model: "Qwen2.5-1.5B-Instruct-Q4_K_M".into(),
             embedding_model: "all-MiniLM-L6-v2".into(),
             auto_analyze_after_scan: true,
             theme: "dark".into(),

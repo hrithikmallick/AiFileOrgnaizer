@@ -27,10 +27,18 @@ pub fn run() {
             std::fs::create_dir_all(&dir)?;
             let db_path = dir.join("organizer.sqlite");
             let db = Database::open(&db_path)?;
-            let resources = app
+            let resource_root = app
                 .path()
                 .resource_dir()
                 .unwrap_or_else(|_| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("resources"));
+            // Tauri's development and installed layouts differ by one
+            // `resources` directory. Accept both without changing the
+            // packaged layout.
+            let resources = if resource_root.join("model-manifest.json").is_file() {
+                resource_root
+            } else {
+                resource_root.join("resources")
+            };
             app.manage(AppState::new(db, resources));
             let state = app.state::<AppState>();
             commands::restart_watcher(&app.handle(), &state).map_err(std::io::Error::other)?;

@@ -24,10 +24,12 @@ run processes or mutate the filesystem.
 ## Bundled llama.cpp model
 
 The desktop package can contain `llama-server.exe`, its runtime DLLs, and a
-release-selected GGUF file under `apps/desktop/src-tauri/resources/`. Rust is
-the only component that starts or stops this process. It always binds to
-`127.0.0.1:8011`, verifies the GGUF SHA-256 from `model-manifest.json`, waits
-for `/health`, then tells FastAPI to use `http://127.0.0.1:8011/v1`.
+release-selected GGUF file under `apps/desktop/src-tauri/resources/`. The same
+installer also contains a frozen `ai-service.exe`. Rust is the only component
+that starts or stops either process: it starts the service on `127.0.0.1:8010`,
+then starts llama.cpp on `127.0.0.1:8011`, verifies the GGUF SHA-256 from
+`model-manifest.json`, waits for `/health`, then tells FastAPI to use
+`http://127.0.0.1:8011/v1`.
 
 Python cannot launch a model process, receive an arbitrary model path, or use
 a non-loopback LLM URL. If the bundled assets are absent or fail validation,

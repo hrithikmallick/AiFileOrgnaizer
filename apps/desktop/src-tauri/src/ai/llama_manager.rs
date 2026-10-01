@@ -84,8 +84,26 @@ impl LocalModelManager {
     }
 
     pub fn start(&self) -> AppResult<LocalModelStatus> {
-        if self.status().state == "ready" || self.status().state == "starting" {
-            return Ok(self.status());
+        let current = self.status();
+        if current.state == "ready" {
+            return Ok(current);
+        }
+        if current.state == "starting" {
+            let deadline = Instant::now() + START_TIMEOUT;
+            while Instant::now() < deadline {
+                let status = self.status();
+                if status.state != "starting" {
+                    return if status.state == "ready" {
+                        Ok(status)
+                    } else {
+                        Err(AppError::AiService(
+                            status.message.unwrap_or_else(|| "llama-server failed to start.".into()),
+                        ))
+                    };
+                }
+                thread::sleep(Duration::from_millis(250));
+            }
+            return self.fail("llama-server did not become ready within 60 seconds.");
         }
 
         let manifest = self.read_manifest()?;
@@ -112,7 +130,7 @@ impl LocalModelManager {
         let model_path = model.to_string_lossy().into_owned();
         let port = MODEL_PORT.to_string();
         let context_size = manifest.context_size.to_string();
-        let mut command = Command::new(executable);
+        let mut command = Command::new(&executable);
         command
             .args([
                 "-m",
@@ -134,7 +152,12 @@ impl LocalModelManager {
             use std::os::windows::process::CommandExt;
             command.creation_flags(0x08000000); // CREATE_NO_WINDOW
         }
-        let child = command.spawn().map_err(AppError::from)?;
+        let child = command.spawn().map_err(|error| {
+            AppError::AiService(format!(
+                "Could not start bundled llama-server at {}: {error}",
+                executable.display()
+            ))
+        })?;
         self.inner.lock().child = Some(child);
 
         let deadline = Instant::now() + START_TIMEOUT;
@@ -165,7 +188,12 @@ impl LocalModelManager {
 
     fn read_manifest(&self) -> AppResult<ModelManifest> {
         let manifest_path = self.resource("model-manifest.json")?;
-        let raw = fs::read_to_string(manifest_path)?;
+        let raw = fs::read_to_string(&manifest_path).map_err(|error| {
+            AppError::AiService(format!(
+                "Bundled model manifest is missing at {}: {error}",
+                manifest_path.display()
+            ))
+        })?;
         serde_json::from_str(&raw).map_err(Into::into)
     }
 
@@ -217,7 +245,7 @@ fn verify_sha256(path: &Path, expected: &str) -> AppResult<()> {
     }
     let mut file = fs::File::open(path)?;
     let mut hasher = Sha256::new();
-    let mut buffer = [0u8; 1024 * 1024];
+    let mut buffer = vec![0u8; 1024 * 1024];
     loop {
         let read = file.read(&mut buffer)?;
         if read == 0 {
